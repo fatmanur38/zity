@@ -26,7 +26,6 @@ export const tr: Record<TranslationKey, string> = {
   "landing.startNote": "Cüzdan gerekmez · hemen başla",
   "landing.startTestnet": "Zcash testnet ile oyna",
   "landing.startTestnetNote": "Testnet ZEC gerekir · gerçek işlem",
-  "landing.how": "Nasıl çalışıyor?",
   "landing.noSignup": "Kayıt gerekmez.",
   "landing.noWallet": "Cüzdan gerekmez.",
   "landing.duration": "4–6 dakikalık deneyim.",

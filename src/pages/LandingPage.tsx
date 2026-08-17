@@ -25,9 +25,6 @@ export function LandingPage() {
                 <small>{t("landing.startTestnetNote")}</small>
               </Link>
             </div>
-            <div className="hero-actions">
-              <a className="button ghost" href="#how">{t("landing.how")}</a>
-            </div>
             <div className="trust-line"><span>✓ {t("landing.noSignup")}</span><span>◷ {t("landing.duration")}</span></div>
           </div>
           <div className="hero-visual" aria-hidden="true">

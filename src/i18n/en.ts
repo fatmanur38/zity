@@ -24,7 +24,6 @@ export const en = {
   "landing.startNote": "No wallet · start instantly",
   "landing.startTestnet": "Play on Zcash testnet",
   "landing.startTestnetNote": "Needs testnet ZEC · real transaction",
-  "landing.how": "How it works",
   "landing.noSignup": "No signup.",
   "landing.noWallet": "No wallet required.",
   "landing.duration": "4–6 minute experience.",
