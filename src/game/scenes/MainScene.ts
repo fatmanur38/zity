@@ -31,6 +31,14 @@ const WORLD_WIDTH = 960;
 const WORLD_HEIGHT = 540;
 const PLAYER_SPEED = 174;
 
+const INTERACTABLE_SIZES: Partial<Record<AssetKey, readonly [number, number]>> = {
+  metroKiosk: [58, 76],
+  metroGate: [86, 76],
+  cafeCounter: [124, 92],
+  clinicTerminal: [136, 116],
+  clubDoor: [132, 116],
+};
+
 export class MainScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Image;
   private keys!: KeyMap;
@@ -57,7 +65,7 @@ export class MainScene extends Phaser.Scene {
     this.createInteractables();
 
     this.player = this.add.image(108, 434, resolveAssetTexture(this, "player"));
-    this.player.setDisplaySize(30, 44).setDepth(20);
+    this.player.setDisplaySize(32, 48).setDepth(20);
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.cameras.main.startFollow(this.player, true, 0.13, 0.13);
     this.cameras.main.setDeadzone(170, 120);
@@ -217,7 +225,8 @@ export class MainScene extends Phaser.Scene {
         definition.position.y,
         resolveAssetTexture(this, definition.assetKey as AssetKey),
       );
-      const size = definition.type === "building" ? [82, 70] : definition.type === "gate" ? [62, 58] : [50, 62];
+      const size = INTERACTABLE_SIZES[definition.assetKey as AssetKey]
+        ?? (definition.type === "building" ? [82, 70] : definition.type === "gate" ? [62, 58] : [50, 62]);
       sprite.setDisplaySize(size[0], size[1]).setDepth(10).setInteractive({ useHandCursor: true });
       sprite.on("pointerdown", (_pointer: Phaser.Input.Pointer, _x: number, _y: number, event: Phaser.Types.Input.EventData) => {
         event.stopPropagation();
@@ -246,6 +255,20 @@ export class MainScene extends Phaser.Scene {
     const active = this.interactables.find((item) => isDefinitionActive(item.definition, state.stage));
     this.interactables.forEach((item) => {
       const isActive = isDefinitionActive(item.definition, state.stage);
+      if (item.definition.id === "metro-gate") {
+        const gateTexture = state.completedMissions.includes("metro") ? "metroGateOpen" : "metroGate";
+        item.sprite.setTexture(resolveAssetTexture(this, gateTexture));
+      }
+      if (item.definition.id === "metro-proof-gate") {
+        const proofWasAccepted = state.usedAuthorizations.length > 0
+          || state.completedMissions.includes("metro-proof-standard");
+        const gateTexture = state.authorizationReuseAttempted
+          ? "metroGateDenied"
+          : proofWasAccepted
+            ? "metroGateOpen"
+            : "metroGate";
+        item.sprite.setTexture(resolveAssetTexture(this, gateTexture));
+      }
       item.sprite.setAlpha(isActive ? 1 : 0.58);
       item.label.setAlpha(isActive ? 1 : 0.58);
       item.halo.setVisible(isActive);
@@ -336,13 +359,36 @@ export class MainScene extends Phaser.Scene {
     });
     this.labels.push({ text: district, key: districtKey });
 
-    [90, 474, 890].forEach((x, index) => {
-      const tree = this.add.image(x, index === 1 ? 250 : 440, resolveAssetTexture(this, "tree"));
+    [[112, 356], [474, 250], [890, 440]].forEach(([x, y]) => {
+      const tree = this.add.image(x, y, resolveAssetTexture(this, "tree"));
       tree.setDisplaySize(36, 54).setDepth(8);
     });
     [128, 486, 896].forEach((x, index) => {
       const lamp = this.add.image(x, index === 1 ? 436 : 250, resolveAssetTexture(this, "streetLamp"));
       lamp.setDisplaySize(20, 50).setDepth(8);
     });
+
+    this.addDecoration("bench", 500, 242, 66, 38);
+    this.addDecoration("trashBin", 462, 393, 24, 34);
+    this.addDecoration("planter", 744, 399, 68, 32);
+    this.addDecoration("bicycle", 870, 400, 58, 36);
+    this.addDecoration("hydrant", 912, 287, 22, 34);
+    this.addDecoration("trafficLight", 54, 276, 24, 58);
+
+    this.addDecoration("barista", 628, 368, 27, 42, 11);
+    this.addDecoration("clinicReceptionist", 824, 340, 27, 42, 11);
+    this.addDecoration("clubSecurity", 411, 242, 29, 44, 11);
+    this.addDecoration("officeWorker", 522, 456, 27, 42, 11);
+  }
+
+  private addDecoration(
+    key: AssetKey,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    depth = 8,
+  ): void {
+    this.add.image(x, y, resolveAssetTexture(this, key)).setDisplaySize(width, height).setDepth(depth);
   }
 }
