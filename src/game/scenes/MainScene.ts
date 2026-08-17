@@ -566,8 +566,14 @@ export class MainScene extends Phaser.Scene {
       } else {
         this.tweens.add({ targets: this.analysisVeil, alpha: 0.44, duration: 520, ease: "Sine.out" });
         this.tweens.add({ targets: this.analysisGraph, alpha: 1, duration: 680, delay: 180, ease: "Sine.out" });
-        this.cameras.main.pan(WORLD_WIDTH / 2, this.cameraWorldHeight / 2, 650, "Sine.inOut");
-        this.cameras.main.zoomTo(this.baseCameraZoom * 1.025, 650, "Sine.inOut");
+        // Camera effects look the ease up in EaseMap directly and leave
+        // `ease` undefined when the name misses, then throw from their own
+        // update() on every frame — which kills Systems.step before
+        // MainScene.update() runs, freezing the player for good. Tweens are
+        // forgiving here ("Sine.out" above works) because they normalise the
+        // name first; cameras need the exact key.
+        this.cameras.main.pan(WORLD_WIDTH / 2, this.cameraWorldHeight / 2, 650, "Sine.easeInOut");
+        this.cameras.main.zoomTo(this.baseCameraZoom * 1.025, 650, "Sine.easeInOut");
       }
       return;
     }
@@ -588,7 +594,7 @@ export class MainScene extends Phaser.Scene {
           this.analysisGraph.setVisible(false);
         },
       });
-      this.cameras.main.zoomTo(this.baseCameraZoom, 360, "Sine.inOut");
+      this.cameras.main.zoomTo(this.baseCameraZoom, 360, "Sine.easeInOut");
       this.time.delayedCall(370, () => this.resizeCamera(this.scale.gameSize));
     }
   }
