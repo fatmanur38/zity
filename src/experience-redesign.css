@@ -422,6 +422,16 @@
   .system-graph { min-height: 280px; border-right: 0; border-bottom: 1px solid #2b4050; }
 }
 
+/* A phone held sideways has ~390px of height for the city, so the header
+   drops to 44px; the WATCHER bar is trimmed to match in styles-redesign.css.
+   The last row stays `auto` so the bar keeps sizing itself around
+   env(safe-area-inset-bottom). Must follow the 1023px block above — equal
+   specificity, so source order decides. */
+@media (pointer: coarse) and (max-height: 520px) and (orientation: landscape) {
+  .game-page { grid-template-rows: 44px minmax(0, 1fr) auto; }
+  .perspective-shift { top: 44px; }
+}
+
 @media (max-width: 680px) {
   .overlay-backdrop.scenario-backdrop {
     align-items: end;

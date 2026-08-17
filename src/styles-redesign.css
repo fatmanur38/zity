@@ -990,6 +990,66 @@
   }
 }
 
+/* A phone held sideways has ~390px of height to give the city. The 56px
+   header and the 64px WATCHER bar were taking a third of that, so both
+   collapse to a single compact row here. The conditions deliberately mirror
+   the coarse branch of the block that reveals the WATCHER bar in the first
+   place — otherwise a short desktop window would reserve a grid row for a
+   bar that is not displayed. */
+@media (pointer: coarse) and (max-height: 520px) and (orientation: landscape) {
+  /* The matching grid-template-rows override lives in experience-redesign.css:
+     that file loads last and sets the mobile row template, so a copy here
+     would be overridden no matter where in this file it sits. */
+  .game-page .game-header {
+    gap: 12px;
+    padding: 0 13px;
+  }
+
+  .game-page .game-header .wordmark {
+    font-size: 16px;
+  }
+
+  /* Still 40x34, comfortably past the 24px WCAG 2.5.8 AA target, but no
+     longer taller than the header that contains it. */
+  .game-page .game-header .icon-button {
+    min-width: 40px;
+    min-height: 34px;
+  }
+
+  .game-page .game-header .language-switcher button {
+    padding: 6px 5px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .watcher-peek-bar.mobile-watcher-bar {
+    min-height: calc(44px + env(safe-area-inset-bottom));
+    gap: 10px;
+    padding: 0 14px env(safe-area-inset-bottom);
+  }
+
+  /* Label and latest event sit on one line instead of stacking. */
+  .watcher-peek-bar__copy {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+  }
+
+  .watcher-peek-bar__copy small {
+    font-size: 11px;
+  }
+
+  .watcher-peek-bar__signal {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .watcher-peek-bar.mobile-watcher-bar .watcher-peek-bar__signal strong {
+    font-size: 15px;
+  }
+}
+
 .game-page[data-reduced-motion="true"] .objective-tracker,
 .game-page[data-reduced-motion="true"] .watcher-edge,
 .game-page[data-reduced-motion="true"] .watcher-edge-break,
