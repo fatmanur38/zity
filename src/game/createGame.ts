@@ -1,8 +1,7 @@
 import Phaser from "phaser";
-import type { AssetKey } from "./assets/manifest";
 import { MainScene } from "./scenes/MainScene";
 
-export function createGame(parent: HTMLElement, availableAssets: ReadonlySet<AssetKey>): Phaser.Game {
+export function createGame(parent: HTMLElement): Phaser.Game {
   return new Phaser.Game({
     type: Phaser.AUTO,
     parent,
@@ -24,7 +23,7 @@ export function createGame(parent: HTMLElement, availableAssets: ReadonlySet<Ass
     input: {
       activePointers: 3,
     },
-    scene: [new MainScene(availableAssets)],
+    scene: [MainScene],
     transparent: false,
   });
 }

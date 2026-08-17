@@ -11,11 +11,9 @@ export function GameCanvas() {
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const { discoverAvailableAssets } = await import("../game/assets/manifest");
-      const availableAssets = await discoverAvailableAssets();
       const { createGame } = await import("../game/createGame");
       if (cancelled || !parentRef.current || gameRef.current) return;
-      gameRef.current = createGame(parentRef.current, availableAssets);
+      gameRef.current = createGame(parentRef.current);
       setLoaded(true);
     })();
 

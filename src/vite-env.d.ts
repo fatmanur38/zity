@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_SETTLEMENT_MODE?: "mock" | "zcash-testnet";
-  readonly VITE_ZCASH_API_URL?: string;
+  readonly VITE_NETWORK_MODE?: "demo" | "testnet";
 }
 
 interface ImportMeta {

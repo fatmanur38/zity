@@ -26,10 +26,10 @@ export function LandingPage() {
               <div className="pixel-sky"><span>ZITY / 08:42</span></div>
               <div className="pixel-buildings"><i /><i /><i /><i /></div>
               <div className="pixel-road"><span className="pixel-person" /><span className="pixel-marker">!</span></div>
-              <div className="watcher-peek"><span className="eye-icon" /><b>WATCHER</b><div><i style={{ width: "34%" }} /></div><strong>34%</strong></div>
+              <div className="watcher-peek"><span className="eye-icon" /><b>{t("phase.analyze")}</b><div><i style={{ width: "66%" }} /></div><strong>3×</strong></div>
             </div>
-            <span className="visual-label label-one">ACCOUNT A827</span>
-            <span className="visual-label label-two">METRO ↔ CAFE</span>
+            <span className="visual-label label-one">{t("landing.visualLive")}</span>
+            <span className="visual-label label-two">{t("landing.visualRethink")}</span>
           </div>
         </section>
 

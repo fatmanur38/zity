@@ -4,8 +4,8 @@ import { assetList, assetManifest, type AssetDefinition, type AssetKey } from ".
 const fileKey = (key: AssetKey): string => `asset-file:${key}`;
 const placeholderKey = (key: AssetKey): string => `asset-placeholder:${key}`;
 
-export function preloadManifest(scene: Phaser.Scene, availableAssets: ReadonlySet<AssetKey>): void {
-  assetList.filter((asset) => availableAssets.has(asset.key)).forEach((asset) => {
+export function preloadManifest(scene: Phaser.Scene): void {
+  assetList.forEach((asset) => {
     scene.load.image(fileKey(asset.key), asset.path);
   });
 }

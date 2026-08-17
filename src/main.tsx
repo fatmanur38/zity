@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { I18nProvider } from "./i18n/I18nProvider";
 import "./styles.css";
+import "./styles-redesign.css";
+import "./experience-redesign.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

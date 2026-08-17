@@ -244,18 +244,3 @@ export const assetManifest: Record<AssetKey, AssetDefinition> = {
 };
 
 export const assetList = Object.values(assetManifest);
-
-export async function discoverAvailableAssets(): Promise<Set<AssetKey>> {
-  const checks = await Promise.all(
-    assetList.map(async (asset): Promise<[AssetKey, boolean]> => {
-      try {
-        const response = await fetch(asset.path, { method: "HEAD", cache: "no-store" });
-        const contentType = response.headers.get("content-type") ?? "";
-        return [asset.key, response.ok && contentType.startsWith("image/")];
-      } catch {
-        return [asset.key, false];
-      }
-    }),
-  );
-  return new Set(checks.filter(([, available]) => available).map(([key]) => key));
-}
