@@ -15,11 +15,20 @@ export function LandingPage() {
             <span className="eyebrow"><i className="live-dot" />{t("landing.eyebrow")}</span>
             <h1>{t("landing.title")}</h1>
             <p>{t("landing.subtitle")}</p>
-            <div className="hero-actions">
-              <Link className="button primary large" to="/demo">{t("landing.start")}<span>→</span></Link>
-              <a className="button ghost large" href="#how">{t("landing.how")}</a>
+            <div className="mode-actions">
+              <Link className="mode-card is-primary" to="/demo">
+                <strong>{t("landing.start")}<span aria-hidden="true">→</span></strong>
+                <small>{t("landing.startNote")}</small>
+              </Link>
+              <Link className="mode-card" to="/demo?network=testnet">
+                <strong>{t("landing.startTestnet")}<span aria-hidden="true">→</span></strong>
+                <small>{t("landing.startTestnetNote")}</small>
+              </Link>
             </div>
-            <div className="trust-line"><span>✓ {t("landing.noSignup")}</span><span>✓ {t("landing.noWallet")}</span><span>◷ {t("landing.duration")}</span></div>
+            <div className="hero-actions">
+              <a className="button ghost" href="#how">{t("landing.how")}</a>
+            </div>
+            <div className="trust-line"><span>✓ {t("landing.noSignup")}</span><span>◷ {t("landing.duration")}</span></div>
           </div>
           <div className="hero-visual" aria-hidden="true">
             <div className="city-window">
