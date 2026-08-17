@@ -678,12 +678,29 @@ export class MainScene extends Phaser.Scene {
 
   private resizeCamera(gameSize: Phaser.Structs.Size): void {
     if (!this.player) return;
-    const mobileLayout = typeof window !== "undefined"
-      && window.matchMedia("(max-width: 900px)").matches;
-    const portrait = mobileLayout && gameSize.width < gameSize.height;
-    this.cameraWorldHeight = portrait ? WORLD_HEIGHT : CAMERA_WORLD_HEIGHT;
+    // Phaser only auto-syncs a camera's own viewport size when it still
+    // exactly matches the *previous* game size (CameraManager#onResize).
+    // A resize driven by a ResizeObserver rather than Phaser's own window
+    // listener can land between two of its internal states and miss that
+    // check, leaving the camera rendering into a stale, wrong-sized
+    // viewport even though the canvas itself is the right size. Setting it
+    // explicitly here removes the dependency on that internal bookkeeping.
+    this.cameras.main.setSize(gameSize.width, gameSize.height);
+
+    // A CSS overlay blocks the game entirely in portrait on touch devices
+    // (see .rotate-device), so a touch device only ever renders here in
+    // landscape. That screen is much wider and shorter than the desktop
+    // diorama's 960x720, 4:3-ish canvas: fitting the full canvas height
+    // in ("contain") leaves large empty bands left and right. Filling the
+    // screen edge-to-edge ("cover") against the shorter WORLD_HEIGHT and
+    // following the player instead is the same treatment already used for
+    // a narrow desktop window turned portrait.
+    const isTouchMobile = typeof window !== "undefined"
+      && window.matchMedia("(pointer: coarse)").matches;
+    const fitToShortEdge = isTouchMobile || gameSize.width < gameSize.height;
+    this.cameraWorldHeight = fitToShortEdge ? WORLD_HEIGHT : CAMERA_WORLD_HEIGHT;
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, this.cameraWorldHeight);
-    this.baseCameraZoom = portrait
+    this.baseCameraZoom = fitToShortEdge
       ? Math.max(gameSize.width / WORLD_WIDTH, gameSize.height / WORLD_HEIGHT)
       : Math.min(gameSize.width / WORLD_WIDTH, gameSize.height / CAMERA_WORLD_HEIGHT);
 
@@ -694,7 +711,7 @@ export class MainScene extends Phaser.Scene {
       return;
     }
     this.cameras.main.setZoom(this.baseCameraZoom);
-    if (portrait) {
+    if (fitToShortEdge) {
       this.cameras.main.startFollow(this.player, true, 0.13, 0.13);
       this.cameras.main.setDeadzone(150, 110);
     } else {

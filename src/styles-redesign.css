@@ -781,7 +781,9 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
-@media (max-width: 900px) {
+/* Matches the shell breakpoint in styles.css: a sideways phone is wider than
+   900px but too short for the desktop sidebar layout. */
+@media (max-width: 900px), (pointer: coarse) and (max-height: 520px) {
   .game-page {
     grid-template-rows: 56px minmax(0, 1fr) calc(64px + env(safe-area-inset-bottom));
   }

@@ -58,6 +58,8 @@ export const tr: Record<TranslationKey, string> = {
   "game.openWatcher": "Watcher'ı aç",
   "game.cityAria": "Etkileşimli ZITY oyun dünyası",
   "game.joystickAria": "Hareket kontrolü",
+  "game.rotateTitle": "Telefonunuzu yatay çevirin",
+  "game.rotateBody": "ZITY yatay ekranda oynanır. Devam etmek için cihazınızı döndürün.",
   "objectives.spawn": "Central District'e git.",
   "objectives.metro-ticket": "Metro bileti al.",
   "objectives.metro-gate": "Biletini metro kapısında kullan.",

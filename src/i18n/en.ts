@@ -56,6 +56,8 @@ export const en = {
   "game.openWatcher": "Open Watcher",
   "game.cityAria": "Interactive ZITY game world",
   "game.joystickAria": "Movement joystick",
+  "game.rotateTitle": "Turn your phone sideways",
+  "game.rotateBody": "ZITY plays in landscape. Rotate your device to continue.",
   "objectives.spawn": "Get to Central District.",
   "objectives.metro-ticket": "Buy a metro ticket.",
   "objectives.metro-gate": "Use your ticket at the metro gate.",

@@ -8,6 +8,7 @@ import { ObjectiveBar } from "../components/ObjectiveBar";
 import { PauseMenu } from "../components/PauseMenu";
 import { PerspectiveShift } from "../components/PerspectiveShift";
 import { ResultsOverlay } from "../components/ResultsOverlay";
+import { RotateDevice } from "../components/RotateDevice";
 import { ScenarioCompare } from "../components/ScenarioCompare";
 import {
   deriveHealthBadgeStatus,
@@ -99,6 +100,7 @@ export function GamePage({ presentation = false }: { presentation?: boolean }) {
       data-analysis={analysisActive ? "true" : "false"}
       data-reduced-motion={reducedMotion ? "true" : "false"}
     >
+      <RotateDevice />
       <header className="game-header">
         <Link to="/" className="wordmark"><span className="wordmark-eye" />ZITY</Link>
         {presentation && <span className="presentation-badge">{t("presentation.badge")}</span>}

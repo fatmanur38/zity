@@ -286,10 +286,78 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--acid); outline-
 
 .sheet-backdrop { display: none; }
 
+.rotate-device { display: none; }
+.rotate-device-icon {
+  width: 46px;
+  height: 78px;
+  border: 3px solid var(--acid);
+  border-radius: 8px;
+  position: relative;
+  animation: rotate-hint 1.8s ease-in-out infinite;
+}
+.rotate-device-icon::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--acid);
+  transform: translateX(-50%);
+}
+.rotate-device strong { font-size: 20px; letter-spacing: -.01em; }
+.rotate-device p { max-width: 320px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
 @keyframes float { to { transform: translateY(-9px); } }
 @keyframes pulse { 50% { opacity: .2; } }
+@keyframes rotate-hint {
+  0%, 15% { transform: rotate(0deg); }
+  50%, 65% { transform: rotate(-90deg); }
+  100% { transform: rotate(-90deg); }
+}
 
-@media (max-width: 900px) {
+/* Touch controls follow the input device, not the viewport width. A phone
+   held sideways is typically 700-950px wide — well past any "mobile" width
+   breakpoint — but still needs the joystick and the touch control hint. */
+@media (pointer: coarse) {
+  .desktop-only { display: none; }
+  .mobile-only { display: inline; }
+  .joystick-cluster { display: block; position: absolute; z-index: 25; left: 20px; bottom: 42px; width: 88px; height: 88px; opacity: .48; transition: opacity .2s; touch-action: none; }
+  .joystick-cluster.is-active { opacity: .9; }
+  .joystick-base { width: 88px; height: 88px; border: 1px solid rgba(255,255,255,.28); background: rgba(8,11,15,.48); border-radius: 50%; display: grid; place-items: center; touch-action: none; }
+  .joystick-knob { display: block; width: 38px; height: 38px; border: 2px solid var(--acid); background: rgba(214,255,63,.18); border-radius: 50%; }
+  .joystick-hint { position: absolute; white-space: nowrap; bottom: 97px; left: 1px; padding: 6px 8px; background: rgba(8,11,15,.82); color: var(--acid); font: 700 9px monospace; animation: pulse 1.2s ease-in-out infinite; }
+}
+
+/* Touch devices only (pointer: coarse) — a desktop window made narrow and
+   tall should never be mistaken for a phone that needs rotating. */
+@media (orientation: portrait) and (pointer: coarse) {
+  .rotate-device {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 32px;
+    text-align: center;
+    background: #07090d;
+  }
+  /* The game keeps running underneath (state, Phaser instance) — it is only
+     hidden and inert until the device is turned. */
+  .game-page > *:not(.rotate-device) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* The second condition catches a phone held sideways: wider than the 900px
+   breakpoint but far too short for the desktop sidebar layout. The height
+   bound keeps tablets in landscape on the desktop layout, where it works. */
+@media (max-width: 900px), (pointer: coarse) and (max-height: 520px) {
   .site-header { grid-template-columns: 1fr auto; }
   .site-nav { display: none; }
   .landing-hero { grid-template-columns: 1fr; gap: 30px; padding-top: 70px; }
@@ -351,13 +419,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--acid); outline-
   .objective-bar strong { font-size: 13px; }
   .world-column { padding-bottom: 0; }
   .control-hint { min-height: 30px; }
-  .desktop-only { display: none; }
-  .mobile-only { display: inline; }
-  .joystick-cluster { display: block; position: absolute; z-index: 25; left: 20px; bottom: 42px; width: 88px; height: 88px; opacity: .48; transition: opacity .2s; touch-action: none; }
-  .joystick-cluster.is-active { opacity: .9; }
-  .joystick-base { width: 88px; height: 88px; border: 1px solid rgba(255,255,255,.28); background: rgba(8,11,15,.48); border-radius: 50%; display: grid; place-items: center; touch-action: none; }
-  .joystick-knob { display: block; width: 38px; height: 38px; border: 2px solid var(--acid); background: rgba(214,255,63,.18); border-radius: 50%; }
-  .joystick-hint { position: absolute; white-space: nowrap; bottom: 97px; left: 1px; padding: 6px 8px; background: rgba(8,11,15,.82); color: var(--acid); font: 700 9px monospace; animation: pulse 1.2s ease-in-out infinite; }
   .dialog-card { padding: 21px; }
   .dialog-actions { flex-direction: column; }
   .choice-grid { grid-template-columns: 1fr; }
