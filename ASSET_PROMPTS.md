@@ -2,17 +2,26 @@
 
 Bu dosya, görsel üretecek agent'a/modele **doğrudan kopyalanabilir** prompt'lar içerir.
 
-## Neden bu dosya var
+## Durum
 
-İki ayrı problem tespit edildi:
+| İş | Durum |
+|---|---|
+| Aşırı çözünürlük (41 MB) | ✅ **Yapıldı** — 41.1 MB → 0.96 MB |
+| Kullanılmayan varyantların ayrılması | ✅ **Yapıldı** — `art-src/`'ye taşındı |
+| `effects/proof.png` üretimi | ⬜ Kaldı — BÖLÜM 1'deki prompt ile |
 
-1. **Eksik asset (1 adet):** `public/assets/effects/proof.png` manifestte tanımlı
-   ama dosya yok. Oyunu bozmuyor (Phaser placeholder çiziyor, ayrıca sahne şu an
-   bu key'i kullanmıyor) — ama görsel efekt için üretilmeli.
-2. **Aşırı çözünürlük (75 dosya / 41 MB):** Mevcut PNG'ler oyunda çizildikleri
-   boyutun 15-25 katı çözünürlükte. Örnek: `watcher/idle.png` 1254×1254 px
-   ama ekranda **34×24** px çiziliyor. Bu, production build'i dakikalarca
-   sürdürüyor ve ilk yükleme süresini gereksiz şişiriyor.
+**Yapılan optimizasyon:** Sprite'lar oyunda çizildikleri boyutun 15-25 katı
+çözünürlükteydi (ör. `watcher/idle.png` 1254×1254 px iken ekranda 34×24 px).
+Hepsi `sips` ile görüntüleme boyutunun 2 katına (retina payı) indirildi,
+alfa kanalı korunarak. Manifestte kullanılmayan 44 dosya (kaynak sheet'ler,
+atlaslar, prop varyantları, yön kareleri) `art-src/` altına alındı — repoda
+duruyorlar ama `public/` dışında oldukları için build'e girmiyorlar.
+
+Sonuç: ilk yüklemede inen toplam **2.67 MB**, gzip'li JS/CSS **486 KB**.
+
+**Kalan tek eksik:** `public/assets/effects/proof.png` manifestte tanımlı ama
+dosya yok. Oyunu bozmuyor — Phaser placeholder çiziyor ve sahne şu an bu key'i
+kullanmıyor.
 
 ---
 

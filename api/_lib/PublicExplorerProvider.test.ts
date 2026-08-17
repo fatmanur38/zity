@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { paymentChallengeSchema, paymentChallengeStatusSchema } from "../../src/testnet/contracts";
 import { assertPrivateZip321Request } from "./ZcashTestnetGateway";
 import {
@@ -6,6 +6,7 @@ import {
   createChallengeId,
   expectedZatoshis,
   PublicExplorerProvider,
+  resetChainHeightCache,
   zatoshisToZec,
   zecToZatoshis,
 } from "./PublicExplorerProvider";
@@ -46,6 +47,10 @@ const txPayload = (value: bigint, overrides: Record<string, unknown> = {}) => ({
   isCanonical: true,
   outputs: [{ address: receiver, value: value.toString(), vout_index: 0 }],
   ...overrides,
+});
+
+beforeEach(() => {
+  resetChainHeightCache();
 });
 
 afterEach(() => {
@@ -282,6 +287,43 @@ describe("payment verification", () => {
     const status = await new PublicExplorerProvider(config).getPaymentChallengeStatus(stale);
     expect(status.state).toBe("expired");
     expect(status.unlockEligible).toBe(false);
+  });
+});
+
+describe("explorer rate-limit courtesy", () => {
+  it("reuses a recent tip instead of re-querying it on every poll", async () => {
+    const challengeId = createChallengeId();
+    const fetchSpy = vi.fn(async (input: string | URL) => {
+      const url = String(input);
+      const payload = url.includes("/api/address/") ? addressPayload([]) : { height: "501" };
+      return { ok: true, status: 200, json: async () => payload } as Response;
+    });
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const provider = new PublicExplorerProvider(config);
+    await provider.getPaymentChallengeStatus(challengeId);
+    await provider.getPaymentChallengeStatus(challengeId);
+
+    const infoCalls = fetchSpy.mock.calls.filter(([url]) => String(url).endsWith("/api/info"));
+    expect(infoCalls).toHaveLength(1);
+  });
+
+  it("still reads a fresh tip once the cache window has passed", async () => {
+    const challengeId = createChallengeId();
+    const fetchSpy = vi.fn(async (input: string | URL) => {
+      const url = String(input);
+      const payload = url.includes("/api/address/") ? addressPayload([]) : { height: "501" };
+      return { ok: true, status: 200, json: async () => payload } as Response;
+    });
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const provider = new PublicExplorerProvider(config);
+    await provider.getPaymentChallengeStatus(challengeId);
+    resetChainHeightCache();
+    await provider.getPaymentChallengeStatus(challengeId);
+
+    const infoCalls = fetchSpy.mock.calls.filter(([url]) => String(url).endsWith("/api/info"));
+    expect(infoCalls).toHaveLength(2);
   });
 });
 

@@ -28,6 +28,26 @@ const CLOCK_SKEW_SECONDS = 180;
 /** Address history page size; the explorer caps `limit` at 100. */
 const ADDRESS_PAGE_LIMIT = 100;
 
+/**
+ * How long a chain tip reading may be reused. Testnet blocks are ~150s apart,
+ * and a stale tip can only ever under-report confirmations — never unlock
+ * early — so this is safe. It exists to spend less of the public explorer's
+ * shared rate limit while several viewers poll at once.
+ */
+const HEIGHT_CACHE_MS = 10_000;
+
+/**
+ * Best-effort, per-instance only. Serverless gives no shared state, so this
+ * smooths repeated polling inside one warm instance; it is a courtesy to the
+ * explorer, never a correctness mechanism.
+ */
+let cachedHeight: { value: number; readAt: number } | null = null;
+
+/** Clears the cache so tests observe each stubbed tip rather than a stale one. */
+export function resetChainHeightCache(): void {
+  cachedHeight = null;
+}
+
 export function zatoshisToZec(zatoshis: bigint): string {
   const whole = zatoshis / ZATOSHIS_PER_ZEC;
   const fraction = (zatoshis % ZATOSHIS_PER_ZEC).toString().padStart(8, "0").replace(/0+$/, "");
@@ -260,8 +280,13 @@ export class PublicExplorerProvider implements ZcashTestnetGateway {
   }
 
   private async chainHeight(): Promise<number> {
+    if (cachedHeight && Date.now() - cachedHeight.readAt < HEIGHT_CACHE_MS) {
+      return cachedHeight.value;
+    }
     const info = await this.request("/api/info") as { height?: unknown; blocks?: unknown };
-    return asInteger(info.height ?? info.blocks, "height");
+    const value = asInteger(info.height ?? info.blocks, "height");
+    cachedHeight = { value, readAt: Date.now() };
+    return value;
   }
 
   /**
