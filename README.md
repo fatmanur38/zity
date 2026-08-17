@@ -9,6 +9,23 @@ same interactions and compare what the city can learn in each version.
 
 The core question is simple: **what does this service actually need to know?**
 
+## Documentation
+
+Developer documentation lives in **[`docs/`](docs/README.md)**:
+
+| Guide | For |
+| --- | --- |
+| [Getting Started](docs/GETTING_STARTED.md) | Clone it and get it running |
+| [Architecture](docs/ARCHITECTURE.md) | How the pieces fit together |
+| [Zcash Integration](docs/ZCASH_INTEGRATION.md) | Which Zcash features are used, and where |
+| [Testnet Setup](docs/TESTNET_SETUP.md) | Connecting to the real Zcash testnet |
+| [API Reference](docs/API.md) | The `/api/testnet/*` endpoints |
+| [Deployment](docs/DEPLOYMENT.md) | Shipping it |
+| [Contributing](docs/CONTRIBUTING.md) | Changing the code |
+
+Quick start: `npm ci && npm run dev` — demo mode needs no wallet, no node,
+and no configuration.
+
 ## Problem
 
 Digital services often ask "who are you?" even when the actual requirement is
@@ -97,7 +114,9 @@ auto-walk and interact, click the world to auto-walk, `Esc` to pause.
 
 **Mobile:** drag the bottom-left joystick to move, tap an active service to
 auto-walk and interact, tap the WATCHER bar to open the correlation graph as
-a bottom sheet. Portrait is supported without rotation.
+a bottom sheet. Landscape is the intended orientation; portrait shows a
+rotate prompt while the game keeps running underneath, so turning the device
+never restarts the run.
 
 ## Language Support
 
