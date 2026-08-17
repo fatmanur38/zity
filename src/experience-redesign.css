@@ -89,7 +89,7 @@
 .choice-card small,
 .compare-label {
   color: var(--muted);
-  font: 700 10px/1.3 ui-monospace, monospace;
+  font: 700 10px/1.3 var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -129,7 +129,7 @@
   place-items: center;
   border: 1px solid #465565;
   color: var(--analysis-cyan);
-  font: 800 10px monospace;
+  font: 800 10px var(--mono);
 }
 
 .choice-card .choice-copy {
@@ -149,7 +149,7 @@
 
 .choice-reveals span {
   color: #c8d0d7;
-  font: 650 10px/1.4 ui-monospace, monospace;
+  font: 650 10px/1.4 var(--mono);
 }
 
 .choice-link-state {
@@ -158,7 +158,7 @@
   align-items: center;
   gap: 6px;
   color: var(--analysis-violet);
-  font: 750 9px monospace;
+  font: 750 9px var(--mono);
   text-transform: uppercase;
 }
 
@@ -185,7 +185,7 @@
   border: 1px solid rgba(120, 231, 255, .28);
   color: var(--analysis-cyan);
   background: rgba(120, 231, 255, .045);
-  font: 700 11px monospace;
+  font: 700 11px var(--mono);
 }
 
 .simulation-strip i {
@@ -245,7 +245,7 @@
 
 .analysis-step {
   color: var(--analysis-cyan);
-  font: 700 11px monospace;
+  font: 700 11px var(--mono);
   letter-spacing: .12em;
 }
 
@@ -282,11 +282,11 @@
 .system-graph svg { width: min(100%, 650px); height: auto; overflow: visible; }
 .system-edges path { fill: none; stroke: #ff776c; stroke-width: 2; stroke-dasharray: 7 5; animation: draw-edge .8s ease-out both; }
 .system-account rect { fill: #191923; stroke: #ff776c; stroke-width: 2; }
-.system-account text { fill: #ffaaa3; font: 800 15px monospace; }
+.system-account text { fill: #ffaaa3; font: 800 15px var(--mono); }
 .system-service rect { fill: #101b27; stroke: #4b6578; }
-.system-service text { fill: #dae8f2; font: 750 12px monospace; text-transform: uppercase; }
+.system-service text { fill: #dae8f2; font: 750 12px var(--mono); text-transform: uppercase; }
 .system-inference rect { fill: #241c31; stroke: var(--analysis-violet); }
-.system-inference text { fill: var(--analysis-violet); font: 900 18px monospace; }
+.system-inference text { fill: var(--analysis-violet); font: 900 18px var(--mono); }
 .system-graph.focus-identity .system-account,
 .system-graph.focus-links .system-edges,
 .system-graph.focus-inference .system-inference { filter: drop-shadow(0 0 9px rgba(120, 231, 255, .5)); }
@@ -301,7 +301,7 @@
 }
 
 .insight-console { padding: 22px; }
-.insight-console > span { color: var(--analysis-cyan); font: 750 10px monospace; text-transform: uppercase; letter-spacing: .1em; }
+.insight-console > span { color: var(--analysis-cyan); font: 750 10px var(--mono); text-transform: uppercase; letter-spacing: .1em; }
 .insight-tabs { display: grid; gap: 7px; margin-top: 15px; }
 .insight-tabs button {
   min-height: 58px;
@@ -317,10 +317,10 @@
   text-align: left;
 }
 .insight-tabs button.is-active { color: white; border-color: var(--analysis-cyan); background: rgba(120, 231, 255, .06); }
-.insight-tabs small { color: var(--analysis-cyan); font: 700 9px monospace; }
+.insight-tabs small { color: var(--analysis-cyan); font: 700 9px var(--mono); }
 .insight-tabs strong { font-size: 12px; }
 .insight-detail { display: grid; grid-template-columns: 34px 1fr; gap: 12px; margin-top: 14px; padding-top: 16px; border-top: 1px solid #293947; animation: detail-in .24s ease-out both; }
-.insight-detail > span { color: var(--analysis-violet); font: 800 10px monospace; }
+.insight-detail > span { color: var(--analysis-violet); font: 800 10px var(--mono); }
 .insight-detail strong { font-size: 13px; }
 .insight-detail p { color: #97a7b5; font-size: 12px; line-height: 1.5; margin: 7px 0 0; }
 
@@ -353,7 +353,7 @@
   align-items: flex-start;
 }
 .compare-heading h2 { margin: 10px 0 0; font-size: clamp(28px, 4vw, 46px); }
-.compare-score-delta { color: var(--mint); font: 800 22px monospace; }
+.compare-score-delta { color: var(--mint); font: 800 22px var(--mono); }
 
 .compare-matrix {
   display: grid;
@@ -372,8 +372,8 @@
 .change-summary { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #2d3b47; }
 .change-summary > div { min-height: 78px; padding: 14px; border-right: 1px solid #2d3b47; display: flex; flex-direction: column; justify-content: space-between; }
 .change-summary > div:last-child { border: 0; }
-.change-summary strong { color: var(--mint); font: 800 22px monospace; }
-.change-summary span { color: var(--muted); font: 700 10px/1.3 monospace; text-transform: uppercase; }
+.change-summary strong { color: var(--mint); font: 800 22px var(--mono); }
+.change-summary span { color: var(--muted); font: 700 10px/1.3 var(--mono); text-transform: uppercase; }
 .compare-explanation { margin: 16px 0 22px; padding: 16px; border-left: 3px solid var(--analysis-cyan); background: rgba(120, 231, 255, .045); color: #bccbd6; line-height: 1.55; }
 
 /* New results hierarchy: explanation first, metrics second. */
@@ -385,13 +385,13 @@
 .result-city.is-redesigned { border-color: rgba(121, 242, 208, .35); background: rgba(121, 242, 208, .035); }
 .result-city h3 { margin: 9px 0 20px; }
 .result-section + .result-section { margin-top: 17px; padding-top: 17px; border-top: 1px solid #2b3640; }
-.result-section > span { color: var(--muted); font: 700 9px monospace; text-transform: uppercase; }
+.result-section > span { color: var(--muted); font: 700 9px var(--mono); text-transform: uppercase; }
 .result-section ul { margin: 9px 0 0; padding-left: 17px; color: #c1c9d0; font-size: 13px; line-height: 1.55; }
 .supporting-metrics { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid #303d48; margin-top: 14px; }
 .supporting-metrics > div { min-height: 76px; padding: 13px; border-right: 1px solid #303d48; display: flex; flex-direction: column; justify-content: space-between; }
 .supporting-metrics > div:last-child { border: 0; }
-.supporting-metrics strong { color: var(--analysis-cyan); font: 800 21px monospace; }
-.supporting-metrics span { color: var(--muted); font: 700 9px/1.3 monospace; text-transform: uppercase; }
+.supporting-metrics strong { color: var(--analysis-cyan); font: 800 21px var(--mono); }
+.supporting-metrics span { color: var(--muted); font: 700 9px/1.3 var(--mono); text-transform: uppercase; }
 
 @keyframes perspective-in {
   from { opacity: 0; clip-path: inset(48% 0 48%); }
