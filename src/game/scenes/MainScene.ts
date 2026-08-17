@@ -731,10 +731,11 @@ export class MainScene extends Phaser.Scene {
     for (let x = 40; x < 930; x += 32) g.lineBetween(x, 126, x, 338);
     for (let y = 134; y < 338; y += 24) g.lineBetween(32, y, 928, y);
 
-    // Building pads tie the large facade art to the same ground plane.
-    this.drawServicePad(g, 54, 252, 192, 78, 0x30243a);
-    this.drawServicePad(g, 354, 268, 232, 68, 0x453329);
-    this.drawServicePad(g, 674, 252, 230, 78, 0x173b42);
+    // Building pads share one base tone so the plaza reads as a single
+    // coherent block; each pad's accent edge is the only per-service color.
+    this.drawServicePad(g, 54, 252, 192, 78, SERVICE_COLORS["club-door"]);
+    this.drawServicePad(g, 354, 268, 232, 68, SERVICE_COLORS["cafe-counter"]);
+    this.drawServicePad(g, 674, 252, 230, 78, SERVICE_COLORS["clinic-terminal"]);
 
     // Road and front sidewalk establish a readable movement lane.
     g.fillStyle(0x121a22, 1);
@@ -765,14 +766,19 @@ export class MainScene extends Phaser.Scene {
       g.lineBetween(0, y, WORLD_WIDTH, y);
     }
 
-    // Metro bay sits as one coherent service cluster.
-    g.fillStyle(0x182833, 1);
+    // Metro bay uses the same base tone as the service pads above, so the
+    // whole district reads as one place rather than mismatched fragments.
+    g.fillStyle(0x05090c, 0.22);
+    g.fillRoundedRect(67, 357, 350, 142, 12);
+    g.fillStyle(0x243138, 0.96);
     g.fillRoundedRect(62, 350, 350, 142, 12);
-    g.lineStyle(2, 0x45616f, 0.68);
+    g.lineStyle(2, 0x3d4c56, 0.5);
     g.strokeRoundedRect(62, 350, 350, 142, 12);
+    g.lineStyle(3, 0x57d6ff, 0.68);
+    g.lineBetween(76, 353, 388, 353);
     g.lineStyle(5, 0xd6ff3f, 0.76);
     g.lineBetween(76, 484, 400, 484);
-    g.lineStyle(1, 0x57d6ff, 0.24);
+    g.lineStyle(1, 0x57d6ff, 0.2);
     for (let x = 82; x < 402; x += 32) g.lineBetween(x, 360, x, 478);
 
     const cityText = this.add.text(22, 20, "ZITY / 08:42", {
@@ -819,14 +825,22 @@ export class MainScene extends Phaser.Scene {
     y: number,
     width: number,
     height: number,
-    color: number,
+    accent: number,
   ): void {
     graphics.fillStyle(0x05090c, 0.26);
     graphics.fillRoundedRect(x + 5, y + 7, width, height, 9);
-    graphics.fillStyle(color, 0.92);
+    // Shared base tone, close to the plaza floor, keeps every pad reading as
+    // one continuous block instead of separate colored islands.
+    graphics.fillStyle(0x263440, 0.95);
     graphics.fillRoundedRect(x, y, width, height, 9);
-    graphics.lineStyle(2, 0x53616a, 0.42);
+    graphics.lineStyle(2, 0x3d4c56, 0.5);
     graphics.strokeRoundedRect(x, y, width, height, 9);
+    // The accent edge is the only place a service's color appears on its pad.
+    graphics.lineStyle(3, accent, 0.68);
+    graphics.lineBetween(x + 14, y + 3, x + width - 14, y + 3);
+    graphics.fillStyle(accent, 0.85);
+    graphics.fillCircle(x + 14, y + 3, 2.4);
+    graphics.fillCircle(x + width - 14, y + 3, 2.4);
   }
 
   private addDecoration(
