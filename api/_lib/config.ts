@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { unlockPolicySchema, zecAmountSchema, type TestnetUnlockPolicy } from "../../src/testnet/contracts";
-import { ApiFailure } from "./http";
+import { unlockPolicySchema, zecAmountSchema, type TestnetUnlockPolicy } from "../../src/testnet/contracts.js";
+import { ApiFailure } from "./http.js";
 
 const positiveInteger = (fallback: number) => z.coerce.number().int().positive().default(fallback);
 const optionalNonEmptyString = z.preprocess(

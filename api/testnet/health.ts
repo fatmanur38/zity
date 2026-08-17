@@ -1,6 +1,6 @@
-import { configuredNetworkMode } from "../_lib/config";
-import { testnetProvider } from "../_lib/testnetProvider";
-import { handleApi, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../_lib/http";
+import { configuredNetworkMode } from "../_lib/config.js";
+import { testnetProvider } from "../_lib/testnetProvider.js";
+import { handleApi, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../_lib/http.js";
 
 export default async function handler(request: ApiRequest, response: ApiResponse): Promise<void> {
   await handleApi(response, async () => {

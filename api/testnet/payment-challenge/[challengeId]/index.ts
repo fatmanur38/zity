@@ -1,6 +1,6 @@
-import { challengeIdSchema } from "../../../../src/testnet/contracts";
-import { testnetProvider } from "../../../_lib/testnetProvider";
-import { handleApi, pathParameter, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../../_lib/http";
+import { challengeIdSchema } from "../../../../src/testnet/contracts.js";
+import { testnetProvider } from "../../../_lib/testnetProvider.js";
+import { handleApi, pathParameter, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../../_lib/http.js";
 
 export default async function handler(request: ApiRequest, response: ApiResponse): Promise<void> {
   await handleApi(response, async () => {

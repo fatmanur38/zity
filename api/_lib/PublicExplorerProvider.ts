@@ -7,10 +7,10 @@ import {
   type TestnetHealth,
   type TestnetPaymentState,
   type TestnetTransactionInfo,
-} from "../../src/testnet/contracts";
-import type { ExplorerServerConfig } from "./config";
-import { ApiFailure } from "./http";
-import type { ZcashTestnetGateway } from "./ZcashTestnetGateway";
+} from "../../src/testnet/contracts.js";
+import type { ExplorerServerConfig } from "./config.js";
+import { ApiFailure } from "./http.js";
+import type { ZcashTestnetGateway } from "./ZcashTestnetGateway.js";
 
 const ZATOSHIS_PER_ZEC = 100_000_000n;
 

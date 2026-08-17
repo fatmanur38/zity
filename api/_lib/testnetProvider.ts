@@ -1,6 +1,6 @@
-import { configuredProvider, explorerServerConfig, testnetServerConfig } from "./config";
-import { PublicExplorerProvider } from "./PublicExplorerProvider";
-import { realTestnetGateway, type ZcashTestnetGateway } from "./ZcashTestnetGateway";
+import { configuredProvider, explorerServerConfig, testnetServerConfig } from "./config.js";
+import { PublicExplorerProvider } from "./PublicExplorerProvider.js";
+import { realTestnetGateway, type ZcashTestnetGateway } from "./ZcashTestnetGateway.js";
 
 /**
  * Selects the configured real-testnet implementation. Both satisfy the same

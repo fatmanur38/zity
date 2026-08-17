@@ -1,6 +1,6 @@
-import { createPaymentChallengeInputSchema } from "../../../src/testnet/contracts";
-import { testnetProvider } from "../../_lib/testnetProvider";
-import { handleApi, readJsonBody, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../_lib/http";
+import { createPaymentChallengeInputSchema } from "../../../src/testnet/contracts.js";
+import { testnetProvider } from "../../_lib/testnetProvider.js";
+import { handleApi, readJsonBody, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../_lib/http.js";
 
 export default async function handler(request: ApiRequest, response: ApiResponse): Promise<void> {
   await handleApi(response, async () => {

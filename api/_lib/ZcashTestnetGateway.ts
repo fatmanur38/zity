@@ -10,10 +10,10 @@ import {
   type PaymentVerification,
   type TestnetHealth,
   type TestnetTransactionInfo,
-} from "../../src/testnet/contracts";
+} from "../../src/testnet/contracts.js";
 import type { ZodType } from "zod";
-import type { TestnetServerConfig } from "./config";
-import { ApiFailure } from "./http";
+import type { TestnetServerConfig } from "./config.js";
+import { ApiFailure } from "./http.js";
 
 export interface ZcashTestnetGateway {
   health(): Promise<TestnetHealth>;

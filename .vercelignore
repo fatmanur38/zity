@@ -1,0 +1,5 @@
+# Kept in the repo for reference but never needed by the deployed app.
+art-src
+gateway
+dist
+*.output

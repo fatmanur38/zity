@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { testnetProvider } from "../../_lib/testnetProvider";
-import { handleApi, pathParameter, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../_lib/http";
+import { testnetProvider } from "../../_lib/testnetProvider.js";
+import { handleApi, pathParameter, requireMethod, sendJson, type ApiRequest, type ApiResponse } from "../../_lib/http.js";
 
 const txidSchema = z.string().regex(/^[a-fA-F0-9]{64}$/);
 

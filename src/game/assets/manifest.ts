@@ -13,7 +13,6 @@ export type AssetKey =
   | "officeWorker"
   | "watcher"
   | "cityMarker"
-  | "proofEffect"
   | "tree"
   | "streetLamp"
   | "bench"
@@ -158,15 +157,6 @@ export const assetManifest: Record<AssetKey, AssetDefinition> = {
     height: 32,
     color: 0xd6ff3f,
     accent: 0xffffff,
-    shape: "icon",
-  },
-  proofEffect: {
-    key: "proofEffect",
-    path: "/assets/effects/proof.png",
-    width: 32,
-    height: 32,
-    color: 0x79f2d0,
-    accent: 0xd6ff3f,
     shape: "icon",
   },
   tree: {
